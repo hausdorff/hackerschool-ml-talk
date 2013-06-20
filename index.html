@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+
+    <title>machine learning: trust me, it's not magic</title>
+
+    <meta name="description" content="a simple presentation about ML for simple people">
+    <meta name="author" content="Alex Clemmer">
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <link rel="stylesheet" href="css/reveal.min.css">
+    <link rel="stylesheet" href="css/theme/simple.css" id="theme">
+
+    <!-- For syntax highlighting -->
+    <link rel="stylesheet" href="lib/css/zenburn.css">
+
+    <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+    <script>
+      document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+    </script>
+
+    <!--[if lt IE 9]>
+    <script src="lib/js/html5shiv.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+    <div class="reveal">
+
+      <!-- Any section element inside of this container is displayed as a slide -->
+      <div class="slides">
+	<section data-transition="linear" data-background-transition="slide">
+	  <h1>machine learning</h1>
+	  <h3>trust me, it's not magic</h3>
+	  <p>
+	    <small><a href="http://www.nullspace.io">Alex Clemmer</a> / <a href="http://twitter.com/hausdorff_space">@hausdorff_space</a></small>
+	  </p>
+	</section>
+
+	<section data-transition="linear" data-background-transition="slide">
+	  <h2>BUT:</h2>
+	  <p>
+	    before I convince you of this, let me tell you why it's magical
+	  </p>
+          <p class="fragment"><i>(and now, on with the show)</i></p>
+	</section>
+
+	<section data-transition="linear" data-background-transition="slide">
+          <h2>the ML community is great</h2>
+          <h3 class="fragment">except that learning ML sucks:</h3>
+          <ol class="fragment">
+            <li>a lot of jargon</li>
+            <li>not clear when to use ML to solve problems</li>
+            <li>not clear <i>how</i> to use ML to solve problems</li>
+            <li>tons of un-concise, bad explanations</li>
+            <li>collectively leading people to attempt to use ML for things they shouldn't</li>
+            <li>...</li>
+          </ol>
+        </section>
+
+	<section data-transition="linear" data-background-transition="slide">
+	  <h2>warning</h2>
+          <p>This is a talk about understanding whether you can use ML as a tool do accomplish a particular task. <br/>
+            How we use the tool is a much harder question to answer <br/>
+            This talk is NOT about libraries</p>
+	</section>
+
+	<section data-transition="linear" data-background-transition="slide">
+          <h2>so: ML is just a tool</h2>
+        </section>
+        
+	<section data-transition="linear" data-background-transition="slide">
+          <h3>and like any tool (e.g., sorting) to use it, we must understand:</h3>
+          <ol>
+            <li>what to put inside of it</li>
+            <li>very vaguely what is going on inside</li>
+            <li>what precisely we can expect to come out</li>
+          </ol>
+        </section>
+
+	<section data-transition="linear" data-background-transition="slide">
+          <h3>so, let's answer these questions:</h3>
+          <ol>
+            <li>Q1: what is ML?</li>
+            <li>Q2: how do we know whether a task is well-suited to ML?</li>
+            <li>Q3: how do we do ML?</li>
+          </ol>
+        </section>
+
+	<section data-transition="linear" data-background-transition="slide">
+          <h2>Q1: what is ML?</h2>
+          <p class="fragment">A: almost all of ML is a contribution to <i>how</i> we do statistical inference</p>
+          <p class="fragment">... and this is useful primarily because it <i>saves people time</i>.</p>
+          <p class="fragment"><i>(we'll get to a more formal definition of statistical inference a minute)</i></p>
+        </section>
+
+	<section data-transition="linear" data-background-transition="slide">
+          <h2><i>how</i> do we cluster data?</h2>
+          <img height="500px" src="http://scikit-learn.github.io/scikit-learn.org/0.8/_images/plot_ward_structured_vs_unstructured_1.png">
+          <p>image public domain via Wikipedia</p>
+        </section>
+
+	<section data-transition="linear" data-background-transition="slide">
+          <h2><i>how</i> do we classify data?</h2>
+          <img height="500px" src="http://i.stack.imgur.com/qt3CZ.png">
+          <p>(found on imgur, could not find source)</p>
+        </section>
+
+	<section data-transition="linear" data-background-transition="slide">
+          <h2><i>how</i> do we:</h2>
+          <ol>
+            <li>predict linguistic structure?</li>
+            <li>recognize objects in pictures?</li>
+            <li>learn to act correctly given positive and negative rewards?</li>
+            <li>... and so on</li>
+          </ol>
+        </section>
+
+	<section data-transition="linear" data-background-transition="slide">
+          <h2>concentrating on the <i>how</i> usually means concentrating on:</h2>
+          <ol>
+            <li>algorithms</li>
+            <li>methodology</li>
+            <li>fancy graphs</li>
+            <li>performance measurements</li>
+          </ol>
+        </section>
+
+	<section data-transition="linear" data-background-transition="slide">
+          <h2>concentrating on the <i>how</i> usually means NOT concentrating on:</h2>
+          <ol>
+            <li>crazy math</li>
+            <li>especially crazy math that is correct in every case -- usually if it's just close to what we want, it's good enough</li>
+          </ol>
+        </section>
+
+	<section data-transition="linear" data-background-transition="slide">
+          <h2>A brief summary of the tasks ML tends to do ok with</h2>
+          <img height="350px" src="http://1.bp.blogspot.com/-ME24ePzpzIM/UQLWTwurfXI/AAAAAAAAANw/W3EETIroA80/s1600/drop_shadows_background.png">
+          <p>source: Andreas Mueller, contributor to scikit.learn</p>
+        </section>
+
+	<section data-transition="linear" data-background-transition="slide">
+          <h2>Q2: how do we know whether a task is well-suited to ML?</h2>
+          <p class="fragment"><i>(it's odd to put this question before Q3, which tells us how to actually do ML, but this section actually does not depend on any ML knowledge)</i></p>
+        </section>
+
+	<section data-transition="linear" data-background-transition="slide">
+          <h2>I have two heuristics:</h2>
+          <ol>
+            <li>if I gave a human the raw data and asked them to find the pattern, could they do it?</li>
+            <li>if I gave the human the pattern we detected, would it be meaningful to them?</li>
+          </ol>
+          <p></p>
+          <p><b>conclusion:</b> if the answer to either of these is "no", then your task could be very hard for a computer to learn.</p>
+        </section>
+
+	<section data-transition="linear" data-background-transition="slide">
+          <h2>Recap.</h2>
+          <p>Here's what we should understand at this point:</p>
+          <ol>
+            <li>vaguely what problems ML might be able to solve for you</li>
+          </ol>
+        </section>
+
+	<section data-transition="linear" data-background-transition="slide">
+          <h2>Recap.</h2>
+          <p>And here's what we have left to figure out:</p>
+          <ol>
+            <li>what goes into an ML system</li>
+            <li>vaguely what's happening inside the system</li>
+            <li>what comes out of an ML system</li>
+          </ol>
+
+          <p></p>
+          <p>And that is what we'll talk about in the next question:</p>
+        </section>
+
+	<section data-transition="linear" data-background-transition="slide">
+          <h2>Q3: how do we do ML?</h2>
+        </section>
+
+	<section data-transition="linear" data-background-transition="slide">
+          <h3>the 10,000-foot view</h3>
+          <ol>
+            <li><b>get data</b> (images/text/sound/whatever)</li>
+            <li><b>preprocess/clean data</b> (remove things from our data that hurt our algorithm)</li>
+            <li><b>turn data into vectors of numbers</b> (most libraries are mathematical and require a numeric representation of data) </li>
+            <li><b>pump those numbers into a ML library, which does the modeling</b> (tweak parameters, choose model that is best)</li>
+            <li><b>recieve model</b> (usually a collection of numbers that can be combined with some data to form a prediciton)</li>
+            <li><b>predict against arbitrary data</b></li>
+          </ol>
+        </section>
+
+	<section data-transition="linear" data-background-transition="slide">
+          <h3>the 10,000-foot view</h3>
+          <p><b>key:</b> <b style="color:red">red</b> = boring, tedious technicality; <br/>
+            <b style="color:blue">blue</b> = difficult and sexy and fun</p>
+          <p></p>
+          <ol>
+            <li><b style="color: red;">get data</b> (images/text/sound/whatever)</li>
+            <li><b style="color: red;">preprocess/clean data</b> (remove things from our data that hurt our algorithm)</li>
+            <li><b style="color: red;">turn data into vectors of numbers</b> (most libraries are mathematical and require a numeric representation of data) </li>
+            <li><b style="color: blue;">pump those numbers into a ML library, which does the modeling</b> (tweak parameters, choose model that is best)</li>
+            <li><b style="color: red;">recieve model</b> (usually a collection of numbers that can be combined with some data to form a prediciton)</li>
+            <li><b style="color: red;">predict against arbitrary data</b></li>
+          </ol>
+        </section>
+
+	<section data-transition="linear" data-background-transition="slide">
+          <h2>This answers two of our questions:</h2>
+          <p>And here's what we have left to figure out:</p>
+          <ol>
+            <li>what goes into an ML system</li>
+            <li>what comes out of an ML system</li>
+          </ol>
+        </section>
+
+	<section data-transition="linear" data-background-transition="slide">
+          <h2>the question of what happens in the middle is the hardest step</h2>
+          <p><i>(it's called modeling)</i></p>
+        </section>
+
+	<section data-transition="linear" data-background-transition="slide">
+          <h2>remember that machine learning is just statistical inference</h2>
+          <ol>
+            <li>probability theory is simply a calculus for reasoning about events that are "uncertain"</li>
+            <li>in <i>statistical inference</i>, we are given some data, and our job is to infer some other quantity given that data (e.g., finding the mean of a distribution, or something more complicated, like a dividing hyperplane)</li>
+            <li>you can think of these inference procedures as "summarizing" the data while preserving some statistically important quantity (e.g., a mean and a classifier are both a kind of summary of data, in that they hopefully capture something essential about the data)</li>
+        </section>
+
+	<section data-transition="linear" data-background-transition="slide">
+          <h2>two major problems with probability theory:</h2>
+          <ol>
+            <li><b>first</b>, probability theory defines rules for manipulating probabilities, but tells us nothing about what probabilities <i>are</i>.</li>
+            <ol>
+              <li>this is one of the primary causes between the Bayesian/frequentist schism</li>
+            </ol>
+            <li><b>second</b>, the conditional probability is an axiom of modern probability theory, not a constructive definition</li>
+            <ol>
+              <li>this makes computing a lot of ML problems quite hard</li>
+            </ol>
+          </ol>
+        </section>
+
+
+	<section>
+	  <h1>the end! (for now)</h1>
+	</section>
+
+      </div>
+
+    </div>
+
+    <script src="lib/js/head.min.js"></script>
+    <script src="js/reveal.min.js"></script>
+
+    <script>
+
+      // Full list of configuration options available here:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+      controls: true,
+      progress: true,
+      history: true,
+      center: true,
+      transition: 'linear',
+      backgroundTransition: 'slide',
+
+      theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+      transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+      // Optional libraries used to extend on reveal.js
+      dependencies: [
+      { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+      { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+      { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+      { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+      // { src: 'plugin/search/search.js', async: true, condition: function() { return !!document.body.classList; } }
+      // { src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+      ]
+      });
+
+    </script>
+
+  </body>
+</html>
